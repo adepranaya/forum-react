@@ -19,4 +19,8 @@ function postedAt(date) {
   return 'just now';
 }
 
-export { postedAt };
+const stripHtmlTags = (htmlString) => {
+  return htmlString.replace(/<[^>]*>/g, '');
+};
+
+export { postedAt, stripHtmlTags };

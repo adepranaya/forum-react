@@ -1,24 +1,19 @@
-import { useState } from 'react';
 import TopNavigation from './components/TopNavigation';
+import SideNavigation from './components/SideNavigation';
+import HomePage from './pages/HomePage';
+import Loading from './components/Loading';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
+      <Loading />
       <TopNavigation />
-      <h1 className="text-3xl font-bold underline bg-background-dark">Hello world!</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="max-w-360 mx-auto flex gap-6 px-6 py-8">
+        <SideNavigation />
+        <main className="flex-1 min-w-0">
+          <HomePage />
+        </main>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }

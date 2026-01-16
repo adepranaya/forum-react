@@ -11,7 +11,7 @@ function TopNavigation() {
         <div className="max-w-360 mx-auto flex items-center justify-between gap-8">
           {/* Logo Area */}
           <div className="flex items-center gap-3">
-            <div className="size-9 bg-primary rounded-lg flex items-center justify-center text-white">
+            <div className="size-9 rounded-lg flex items-center justify-center text-white">
               <MessagesSquare />
             </div>
             <h2 className="text-xl font-bold tracking-tight">DevForum</h2>
@@ -33,7 +33,7 @@ function TopNavigation() {
           {/* TODO: create new component and check guest or not */}
           <div className="flex items-center gap-4">
             <Button>Sign In</Button>
-            <button button className="flex items-center gap-3 pl-2">
+            <button className="flex items-center gap-3 pl-2">
               <div className="text-right hidden sm:block">
                 <p className="text-xs font-semibold">Alex Rivers</p>
                 <p className="text-[10px] text-slate-500">2.4k Karma</p>
