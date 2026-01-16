@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronUp, MessageCircleIcon } from 'lucide-react';
 import { postedAt } from '../utils';
 import SafeHTMLRenderer from './SafeHTMLRenderer';
+import { useNavigate } from 'react-router';
 
 export default function ThreadItem({
   id,
@@ -14,6 +15,8 @@ export default function ThreadItem({
   upVote,
   downVote,
 }) {
+  const navigate = useNavigate();
+  
   const onUpVoteClick = (event) => {
     event.stopPropagation();
     upVote(id);
@@ -24,7 +27,7 @@ export default function ThreadItem({
   };
 
   const onThreadClick = () => {
-    // navigate(`/threads/${id}`);
+    navigate(`/threads/${id}`);
   };
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/40 transition-colors flex">

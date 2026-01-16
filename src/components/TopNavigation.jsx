@@ -1,9 +1,12 @@
 import { MessagesSquare, Search } from "lucide-react";
 import Button from "./Button";
+import { useNavigate } from "react-router";
 
 function TopNavigation() {
-
-  
+  const navigate = useNavigate();
+  function navToSignin() {
+    navigate('/login');
+  }
 
   return (
     <>
@@ -32,7 +35,7 @@ function TopNavigation() {
           {/* User Actions */}
           {/* TODO: create new component and check guest or not */}
           <div className="flex items-center gap-4">
-            <Button>Sign In</Button>
+            <Button onClick={navToSignin}>Sign In</Button>
             <button className="flex items-center gap-3 pl-2">
               <div className="text-right hidden sm:block">
                 <p className="text-xs font-semibold">Alex Rivers</p>

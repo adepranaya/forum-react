@@ -14,7 +14,7 @@
        - Vote Comment (authenticated)
      - Create Thread (authenticated)
    - Leaderboard
-     - See All Thread
+     - See All Leaderboards
    - Auth (Login / Profile + Logout)
      - Login
      - Register
