@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { asyncPopulateUsersAndThreads } from '../states/shared/action';
 
 const HomePage = () => {
-  const { threads = [], users = [] } = useSelector((states) => states);
+  const {
+    threads = [],
+    users = [],
+    threadCategorySelected = null,
+  } = useSelector((states) => states);
 
   const dispatch = useDispatch();
 
@@ -13,18 +17,23 @@ const HomePage = () => {
     dispatch(asyncPopulateUsersAndThreads());
   }, [dispatch]);
 
-  const threadList = threads.map((thread) => ({
+  const filteredThreads =
+    threadCategorySelected === null
+      ? threads
+      : threads.filter((thread) => thread.category === threadCategorySelected);
+
+  const threadList = filteredThreads.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
     totalVotes: thread.upVotesBy.length + thread.downVotesBy.length,
     // authUser: authUser.id,
   }));
 
-  const categoryList = threads.map((thread) => thread.category)
+  const categoryList = threads.map((thread) => thread.category);
 
   return (
     <>
-      <Filters categories={categoryList}/>
+      <Filters categories={categoryList} />
       <ThreadsList threads={threadList} />
     </>
   );
