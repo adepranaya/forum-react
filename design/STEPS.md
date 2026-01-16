@@ -4,9 +4,9 @@
    Site Map:
    - Threads
      - See All Threads
-       - See Total Threads
        - Vote Thread (authenticated)
        - Filter (client side)
+       - See Total Comment
      - Detail Thread
        - See Total Comment
        - Vote Thread (authenticated)

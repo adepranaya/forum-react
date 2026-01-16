@@ -4,7 +4,9 @@ import api from '../../utils/api';
 const ActionType = {
   RECEIVE_THREADS: 'RECEIVE_THREADS',
   ADD_THREAD: 'ADD_THREAD',
-  TOGGLE_LIKE_THREAD: 'TOGGLE_LIKE_THREAD',
+  TOGGLE_UP_VOTE_THREAD: 'TOGGLE_UP_VOTE_THREAD',
+  TOGGLE_NEUTRAL_VOTE_THREAD: 'TOGGLE_NEUTRAL_VOTE_THREAD',
+  TOGGLE_DOWN_VOTE_THREAD: 'TOGGLE_DOWN_VOTE_THREAD',
 };
 
 function receiveThreadsActionCreator(threads) {
@@ -25,9 +27,18 @@ function addThreadActionCreator(thread) {
   };
 }
 
-function toggleLikeThreadActionCreator({ threadId, userId }) {
+function toggleUpThreadActionCreator({ threadId, userId }) {
   return {
-    type: ActionType.TOGGLE_LIKE_THREAD,
+    type: ActionType.TOGGLE_UP_VOTE_THREAD,
+    payload: {
+      threadId,
+      userId,
+    },
+  };
+}
+function toggleNeutralThreadActionCreator({ threadId, userId }) {
+  return {
+    type: ActionType.TOGGLE_NEUTRAL_VOTE_THREAD,
     payload: {
       threadId,
       userId,
@@ -50,18 +61,18 @@ function asyncAddThread({ text, replyTo = '' }) {
   };
 }
 
-function asyncToogleLikeThread(threadId) {
+function asyncToogleUpThread(threadId) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
 
     const { authUser } = getState();
-    dispatch(toggleLikeThreadActionCreator({ threadId, userId: authUser.id }));
+    dispatch(toggleUpThreadActionCreator({ threadId, userId: authUser.id }));
 
     try {
-      await api.toggleLikeThread(threadId);
+      await api.toggleUpThread(threadId);
     } catch (error) {
       alert(error.message);
-      dispatch(toggleLikeThreadActionCreator({ threadId, userId: authUser.id }));
+      dispatch(toggleUpThreadActionCreator({ threadId, userId: authUser.id }));
     }
 
     dispatch(hideLoading());
@@ -72,7 +83,8 @@ export {
   ActionType,
   receiveThreadsActionCreator,
   addThreadActionCreator,
-  toggleLikeThreadActionCreator,
+  toggleUpThreadActionCreator,
+  toggleNeutralThreadActionCreator,
   asyncAddThread,
-  asyncToogleLikeThread,
+  asyncToogleUpThread,
 };
