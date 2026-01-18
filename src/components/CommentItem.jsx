@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCurrentVote } from '../hooks/useCurrentVote';
 import { postedAt } from '../utils';
 import SafeHTMLRenderer from './SafeHTMLRenderer';
-import VoteX from './VoteX';
 import { asyncDownVoteThreadComment, asyncNeutralVoteThreadComment, asyncUpVoteThreadComment } from '../states/threadDetail/action';
+import VoteControl from './VoteControl';
 
 export default function CommentItem({
   id: commentId,
@@ -30,7 +30,7 @@ export default function CommentItem({
           />
         </div>
         <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
             <span className="font-bold text-sm">{owner?.name}</span>
             <span className="text-xs text-slate-500">
               • {postedAt(createdAt)}
@@ -40,7 +40,7 @@ export default function CommentItem({
             <SafeHTMLRenderer htmlString={content} />
           </div>
           <div className="flex items-center gap-4">
-            <VoteX
+            <VoteControl
               totalVotes={totalVotes}
               currentVote={currentVote}
               onUpvote={() => dispatch(asyncUpVoteThreadComment({id: threadId, commentId}))}

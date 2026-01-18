@@ -1,7 +1,6 @@
 import { MessageCircleIcon } from 'lucide-react';
 import { postedAt } from '../utils';
 import SafeHTMLRenderer from './SafeHTMLRenderer';
-import VoteX from './VoteX';
 import {
   asyncDownVoteThreadDetail,
   asyncNeutralVoteThreadDetail,
@@ -9,6 +8,7 @@ import {
 } from '../states/threadDetail/action';
 import { useDispatch } from 'react-redux';
 import { useCurrentVote } from '../hooks/useCurrentVote';
+import VoteControl from './VoteControl';
 
 export default function DetailThreadItem({
   id,
@@ -57,8 +57,8 @@ export default function DetailThreadItem({
       </div>
 
       <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <VoteX
+        <div className="flex items-center gap-4 flex-wrap">
+          <VoteControl
             totalVotes={totalVotes}
             currentVote={currentVote}
             onUpvote={() => dispatch(asyncUpVoteThreadDetail())}

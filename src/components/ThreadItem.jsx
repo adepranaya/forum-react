@@ -6,7 +6,6 @@ import VoteControl from './VoteControl';
 import { useCurrentVote } from '../hooks/useCurrentVote';
 import { useDispatch } from 'react-redux';
 import { asyncDownVoteThread, asyncNeutralVoteThread, asyncUpVoteThread } from '../states/threads/action';
-import VoteY from './VoteY';
 
 export default function ThreadItem({
   id,
@@ -38,7 +37,7 @@ export default function ThreadItem({
       />
       <div className="flex-1 p-5 flex gap-5">
         <div className="flex-1 flex flex-col gap-2">
-          <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium">
+          <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium flex-wrap">
             <img
               src={user?.avatar}
               className="size-5 rounded-full"
