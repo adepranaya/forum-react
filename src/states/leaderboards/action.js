@@ -24,9 +24,10 @@ function asyncReceiveLeaderboards() {
       dispatch(receiveLeaderboardsActionCreator(leaderboards));
     } catch (error) {
       alert(error.message);
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-
-    dispatch(hideLoading());
   };
 }
 

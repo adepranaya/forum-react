@@ -55,9 +55,10 @@ function asyncAddThread({ text, replyTo = '' }) {
       dispatch(addThreadActionCreator(thread));
     } catch (error) {
       alert(error.message);
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-
-    dispatch(showLoading());
   };
 }
 
@@ -73,9 +74,10 @@ function asyncToogleUpThread(threadId) {
     } catch (error) {
       alert(error.message);
       dispatch(toggleUpThreadActionCreator({ threadId, userId: authUser.id }));
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-
-    dispatch(hideLoading());
   };
 }
 

@@ -22,14 +22,11 @@ function asyncRegisterUser({ email, name, password }) {
       await api.register({ email, name, password });
     } catch (error) {
       alert(error.message);
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-
-    dispatch(hideLoading());
   };
 }
 
-export {
-  ActionType,
-  receiveUsersActionCreator,
-  asyncRegisterUser,
-};
+export { ActionType, receiveUsersActionCreator, asyncRegisterUser };

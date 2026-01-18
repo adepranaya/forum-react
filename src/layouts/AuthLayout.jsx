@@ -3,6 +3,12 @@ import { NavLink, Outlet } from 'react-router';
 
 // A layout component that includes common elements like a header and a place for child routes
 const AuthLayout = () => {
+  const linkActive = (isActive) =>
+    `flex flex-col items-center justify-center  transition-colors pb-3.25 pt-4 ${
+      isActive
+        ? 'border-primary text-primary border-b-[3px]'
+        : 'order-transparent text-slate-400 dark:text-[#9cabba]  hover:text-slate-600 dark:hover:text-white'
+    }`;
   return (
     <main className="flex-1 flex items-center justify-center p-6 md:p-12">
       <div className="w-full max-w-5xl bg-white dark:bg-[#1b2127] rounded-xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-slate-200 dark:border-[#283039]">
@@ -59,16 +65,16 @@ const AuthLayout = () => {
           <div className="pb-6">
             <div className="flex border-b border-slate-200 dark:border-[#3b4754] gap-8">
               <NavLink
-                className="flex flex-col items-center justify-center border-b-[3px] border-primary text-primary pb-[13px] pt-4"
                 to="/login"
+                className={({ isActive }) => linkActive(isActive)}
               >
                 <p className="text-sm font-bold leading-normal tracking-[0.015em]">
                   Login
                 </p>
               </NavLink>
               <NavLink
-                className="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-400 dark:text-[#9cabba] pb-3.25 pt-4 hover:text-slate-600 dark:hover:text-white transition-colors"
                 to="/register"
+                className={({ isActive }) => linkActive(isActive)}
               >
                 <p className="text-sm font-bold leading-normal tracking-[0.015em]">
                   Register

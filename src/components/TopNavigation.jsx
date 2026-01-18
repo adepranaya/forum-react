@@ -1,4 +1,5 @@
-import { MessagesSquare, Search } from 'lucide-react';
+import PropTypes from 'prop-types';
+import { MessagesSquare } from 'lucide-react';
 import { NavLink } from 'react-router';
 import UserActions from './UserActions';
 
@@ -9,24 +10,11 @@ function TopNavigation({ onSignOut }) {
         <div className="max-w-360 mx-auto flex items-center justify-between gap-8">
           {/* Logo Area */}
           <NavLink to="/" className="flex items-center gap-3">
-            <div className="size-9 rounded-lg flex items-center justify-center text-white">
+            <div className="hidden md:flex size-9 rounded-lg items-center justify-center text-white">
               <MessagesSquare />
             </div>
-            <h2 className="text-xl font-bold tracking-tight">DevForum</h2>
+            <h2 className=" text-xl font-bold tracking-tight">DevForum</h2>
           </NavLink>
-          {/* Search Bar */}
-          <div className="flex-1 max-w-2xl">
-            <div className="relative group">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
-                <Search />
-              </div>
-              <input
-                className="block w-full pl-10 pr-3 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg focus:ring-2 focus:ring-primary text-sm placeholder-slate-500"
-                placeholder="Search for threads, users, or tags..."
-                type="text"
-              />
-            </div>
-          </div>
 
           {/* User Actions */}
           <UserActions onSignOut={onSignOut} />
@@ -35,5 +23,9 @@ function TopNavigation({ onSignOut }) {
     </>
   );
 }
+
+TopNavigation.propTypes = {
+  onSignOut: PropTypes.func.isRequired,
+};
 
 export default TopNavigation;

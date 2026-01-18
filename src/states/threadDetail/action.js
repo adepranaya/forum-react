@@ -41,9 +41,10 @@ function asyncReceiveThreadDetail(threadId) {
       dispatch(receiveThreadDetailActionCreator(threadDetail));
     } catch (error) {
       alert(error.message);
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-
-    dispatch(hideLoading());
   };
 }
 
@@ -57,9 +58,10 @@ function asyncToogleLikeThreadDetail() {
       await api.toggleLikeThread(threadDetail.id);
     } catch (error) {
       alert(error.message);
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-
-    dispatch(hideLoading());
   };
 }
 

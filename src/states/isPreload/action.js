@@ -29,9 +29,9 @@ function asyncPreloadProcess() {
     } finally {
       // end preload process
       dispatch(setIsPreloadActionCreator(false));
+      dispatch(hideLoading());
     }
 
-    dispatch(hideLoading());
   };
 }
 

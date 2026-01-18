@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import Button from './Button';
+import { LogIn, LogOut } from 'lucide-react';
 
 function UserActions({ onSignOut }) {
   const { authUser = null } = useSelector((states) => states);
@@ -12,23 +13,30 @@ function UserActions({ onSignOut }) {
   return (
     <div className="flex items-center gap-4">
       {authUser === null ? (
-        <Button onClick={navToSignin}>Sign In</Button>
+        <Button onClick={navToSignin}>
+          <span className="hidden sm:block">Sign In</span>
+          <LogIn className="sm:ms-2" />
+        </Button>
       ) : (
         <>
-          <button className="flex items-center gap-3 pl-2">
-            <div className="text-right hidden sm:block">
+          <NavLink
+            to="/profile"
+            className="hidden sm:flex items-center gap-3 pl-2"
+          >
+            <div className="text-right ">
               <p className="text-xs font-semibold">{authUser.name}</p>
               <p className="text-[10px] text-slate-500">{authUser.email}</p>
             </div>
-            <div
-              className="size-10 rounded-full bg-cover bg-center border-2 border-primary/20"
-              data-alt="User profile avatar portrait"
-              style={{
-                backgroundImage: `url(${authUser.avatar})`,
-              }}
-            ></div>
-          </button>
-          <Button onClick={onSignOut}>Sign Out</Button>
+            <img
+              src={authUser.avatar}
+              className="size-10 rounded-full border-2 border-primary/20"
+              alt="User profile avatar portrait"
+            ></img>
+          </NavLink>
+          <Button onClick={onSignOut}>
+            <span className="hidden sm:block">Sign Out </span>
+            <LogOut className="sm:ms-2" />
+          </Button>
         </>
       )}
     </div>

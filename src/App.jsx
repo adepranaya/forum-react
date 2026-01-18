@@ -52,10 +52,14 @@ function App() {
           <Route path="threads">
             <Route index element={<HomePage />} />
             <Route path=":id" element={<DetailThreadPage />} />
-            <Route path="create" element={<CreateThreadPage />} />
+            {authUser !== null && (
+              <Route path="create" element={<CreateThreadPage />} />
+            )}
           </Route>
           <Route path="leaderboard" element={<LeaderboardPage />} />
-          <Route path="profile" element={<ProfilePage />} />
+          {authUser !== null && (
+            <Route path="profile" element={<ProfilePage />} />
+          )}
         </Route>
       </Routes>
     </>

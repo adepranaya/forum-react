@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronUp, MessageCircleIcon } from 'lucide-react';
 import { postedAt } from '../utils';
 import SafeHTMLRenderer from './SafeHTMLRenderer';
-import { useNavigate } from 'react-router';
+import { NavLink } from 'react-router';
 
 export default function ThreadItem({
   id,
@@ -15,8 +15,6 @@ export default function ThreadItem({
   upVote,
   downVote,
 }) {
-  const navigate = useNavigate();
-  
   const onUpVoteClick = (event) => {
     event.stopPropagation();
     upVote(id);
@@ -27,7 +25,7 @@ export default function ThreadItem({
   };
 
   const onThreadClick = () => {
-    navigate(`/threads/${id}`);
+    return `/threads/${id}`;
   };
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/40 transition-colors flex">
@@ -49,7 +47,11 @@ export default function ThreadItem({
       <div className="flex-1 p-5 flex gap-5">
         <div className="flex-1 flex flex-col gap-2">
           <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium">
-            <img src={user?.avatar} className='size-5 rounded-full' alt={`Mini avatar of ${user?.name}`} />
+            <img
+              src={user?.avatar}
+              className="size-5 rounded-full"
+              alt={`Mini avatar of ${user?.name}`}
+            />
             <span className="text-slate-900 dark:text-slate-200">
               {user?.name}
             </span>
@@ -60,19 +62,19 @@ export default function ThreadItem({
             </span>
           </div>
           <h3 className="text-lg font-bold leading-snug hover:text-primary cursor-pointer transition-colors">
-            <button onClick={onThreadClick}>{title}</button>
+            <NavLink to={onThreadClick()}>{title}</NavLink>
           </h3>
           <div className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
             <SafeHTMLRenderer htmlString={body} />
           </div>
           <div className="flex items-center gap-4 mt-3">
-            <button
+            <NavLink
               className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 px-3 py-1.5 rounded-lg transition-colors"
-              onClick={onThreadClick}
+              to={onThreadClick()}
             >
               <MessageCircleIcon size={14} />
               {totalComments} Comments
-            </button>
+            </NavLink>
           </div>
         </div>
       </div>
