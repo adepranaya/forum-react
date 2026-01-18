@@ -1,7 +1,7 @@
 import TopNavigation from './components/TopNavigation';
 import HomePage from './pages/HomePage';
 import Loading from './components/Loading';
-import { Routes, Route } from 'react-router';
+import { Routes, Route, useNavigate } from 'react-router';
 import LeaderboardPage from './pages/LeaderboardPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
@@ -14,6 +14,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncPreloadProcess } from './states/isPreload/action';
 import { asyncUnsetAuthUser } from './states/authUser/action';
+import ProtectedRoute from './components/ProtectedRoute';
+import NotFound from './components/NotFound';
 
 function App() {
   const { authUser = null, isPreload = false } = useSelector(
@@ -21,6 +23,7 @@ function App() {
   );
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(asyncPreloadProcess());
@@ -32,6 +35,7 @@ function App() {
 
   const onSignOut = () => {
     dispatch(asyncUnsetAuthUser());
+    navigate('/');
   };
 
   return (
@@ -48,18 +52,29 @@ function App() {
         )}
 
         <Route element={<MainLayout />}>
+          <Route path="*" element={<NotFound />} />
           <Route index element={<HomePage />} />
           <Route path="threads">
             <Route index element={<HomePage />} />
             <Route path=":id" element={<DetailThreadPage />} />
-            {authUser !== null && (
-              <Route path="create" element={<CreateThreadPage />} />
-            )}
+            <Route
+              path="create"
+              element={
+                <ProtectedRoute>
+                  <CreateThreadPage />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           <Route path="leaderboard" element={<LeaderboardPage />} />
-          {authUser !== null && (
-            <Route path="profile" element={<ProfilePage />} />
-          )}
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute to="/login">
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </>

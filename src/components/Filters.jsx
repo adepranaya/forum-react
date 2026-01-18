@@ -2,6 +2,7 @@ import { LayoutGrid, Search } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategoryFilterActionCreator } from '../states/threadCategorySelected/action';
 import FilterButton from './FilterButton';
+import HeadingApp from './HeadingApp';
 
 export default function Filters({ categories = [] }) {
   const threadCategorySelected = useSelector(
@@ -16,7 +17,7 @@ export default function Filters({ categories = [] }) {
   return (
     <div className="mb-6 flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">All Threads</h1>
+        <HeadingApp>All Threads</HeadingApp>
       </div>
       {/* Search Bar */}
       <div className="flex-1 max-w-2xl">

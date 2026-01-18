@@ -1,7 +1,14 @@
-import { ArrowDown, ArrowUp, MessageCircleIcon } from 'lucide-react';
+import { MessageCircleIcon } from 'lucide-react';
 import { postedAt } from '../utils';
 import SafeHTMLRenderer from './SafeHTMLRenderer';
 import VoteX from './VoteX';
+import {
+  asyncDownVoteThreadDetail,
+  asyncNeutralVoteThreadDetail,
+  asyncUpVoteThreadDetail,
+} from '../states/threadDetail/action';
+import { useDispatch } from 'react-redux';
+import { useCurrentVote } from '../hooks/useCurrentVote';
 
 export default function DetailThreadItem({
   id,
@@ -11,8 +18,14 @@ export default function DetailThreadItem({
   createdAt,
   owner,
   comments,
+  upVotesBy,
+  downVotesBy,
   totalVotes,
 }) {
+  const dispatch = useDispatch();
+
+  const currentVote = useCurrentVote(upVotesBy, downVotesBy);
+
   return (
     <div key={id} className="p-6 md:p-8">
       <div className="flex items-center gap-3 mb-6">
@@ -43,11 +56,19 @@ export default function DetailThreadItem({
         <SafeHTMLRenderer htmlString={body} />
       </div>
 
-
       <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <VoteX totalVotes={totalVotes} />
-          <a href='#comments' className="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-sm font-semibold">
+          <VoteX
+            totalVotes={totalVotes}
+            currentVote={currentVote}
+            onUpvote={() => dispatch(asyncUpVoteThreadDetail())}
+            onDownvote={() => dispatch(asyncDownVoteThreadDetail())}
+            onNeutral={() => dispatch(asyncNeutralVoteThreadDetail())}
+          />
+          <a
+            href="#comments"
+            className="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-sm font-semibold"
+          >
             <MessageCircleIcon size={14} />
             <span>{comments?.length} Comments</span>
           </a>

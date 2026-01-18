@@ -25,7 +25,7 @@ const HomePage = () => {
   const threadList = filteredThreads.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
-    totalVotes: thread.upVotesBy.length + thread.downVotesBy.length,
+    totalVotes: thread.upVotesBy.length - thread.downVotesBy.length,
     // authUser: authUser.id,
   }));
 

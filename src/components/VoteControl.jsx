@@ -1,0 +1,89 @@
+import { ArrowDown, ArrowUp, ChevronDown, ChevronUp } from 'lucide-react';
+import PropTypes from 'prop-types';
+import { cn } from '../utils/cn';
+
+const VARIANTS = {
+  horizontal: {
+    container:
+      'flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1',
+    buttonUp: 'p-2 hover:bg-primary/20 hover:text-primary rounded-md',
+    buttonDown: 'p-2 hover:bg-red-500/20 hover:text-red-500 rounded-md',
+    text: 'px-2 text-sm font-bold',
+    IconUp: ArrowUp,
+    IconDown: ArrowDown,
+  },
+  vertical: {
+    container:
+      'w-12 bg-slate-50 dark:bg-slate-950/40 flex flex-col items-center py-4 gap-1',
+    buttonUp:
+      'p-2 hover:bg-primary/20 text-slate-400 hover:text-primary rounded-md',
+    buttonDown:
+      'p-2 hover:bg-red-500/20 text-slate-400 hover:text-red-500 rounded-md',
+    text: 'text-sm font-bold',
+    IconUp: ChevronUp,
+    IconDown: ChevronDown,
+  },
+};
+
+function VoteControl({
+  totalVotes = 0,
+  currentVote,
+  onUpvote,
+  onDownvote,
+  onNeutral,
+  variant = 'horizontal',
+}) {
+  const styles = VARIANTS[variant] || VARIANTS.horizontal;
+  const { IconUp, IconDown } = styles;
+
+  const handleVote = (voteType) => {
+    if (currentVote === voteType) {
+      onNeutral();
+    } else if (voteType === 'up') {
+      onUpvote();
+    } else {
+      onDownvote();
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      <button
+        className={cn(
+          `${styles.buttonUp} transition-colors ${
+            currentVote === 'up' ? 'text-primary' : ''
+          }`
+        )}
+        onClick={() => handleVote('up')}
+        aria-label="Upvote"
+      >
+        <IconUp size={14} />
+      </button>
+
+      <span className={styles.text}>{totalVotes}</span>
+
+      <button
+        className={cn(
+          `${styles.buttonDown} transition-colors ${
+            currentVote === 'down' ? 'text-red-500' : ''
+          }`
+        )}
+        onClick={() => handleVote('down')}
+        aria-label="Downvote"
+      >
+        <IconDown size={14} />
+      </button>
+    </div>
+  );
+}
+
+VoteControl.propTypes = {
+  totalVotes: PropTypes.number,
+  currentVote: PropTypes.oneOf(['up', 'down', 'neutral']),
+  onUpvote: PropTypes.func,
+  onDownvote: PropTypes.func,
+  onNeutral: PropTypes.func,
+  variant: PropTypes.oneOf(['horizontal', 'vertical']),
+};
+
+export default VoteControl;

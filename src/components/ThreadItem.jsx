@@ -1,7 +1,12 @@
-import { ChevronDown, ChevronUp, MessageCircleIcon } from 'lucide-react';
+import { ChevronDown, ChevronUp, MessageCircleIcon, Vote } from 'lucide-react';
 import { postedAt } from '../utils';
 import SafeHTMLRenderer from './SafeHTMLRenderer';
 import { NavLink } from 'react-router';
+import VoteControl from './VoteControl';
+import { useCurrentVote } from '../hooks/useCurrentVote';
+import { useDispatch } from 'react-redux';
+import { asyncDownVoteThread, asyncNeutralVoteThread, asyncUpVoteThread } from '../states/threads/action';
+import VoteY from './VoteY';
 
 export default function ThreadItem({
   id,
@@ -12,38 +17,25 @@ export default function ThreadItem({
   user,
   totalVotes,
   totalComments = 0,
-  upVote,
-  downVote,
+  upVotesBy,
+  downVotesBy,
 }) {
-  const onUpVoteClick = (event) => {
-    event.stopPropagation();
-    upVote(id);
-  };
-  const onDownVoteClick = (event) => {
-    event.stopPropagation();
-    downVote(id);
-  };
+  const dispatch = useDispatch();
+  const currentVote = useCurrentVote(upVotesBy, downVotesBy);
 
   const onThreadClick = () => {
     return `/threads/${id}`;
   };
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/40 transition-colors flex">
-      <div className="w-12 bg-slate-50 dark:bg-slate-950/40 flex flex-col items-center py-4 gap-1">
-        <button
-          className="text-slate-400 hover:text-primary"
-          onClick={onUpVoteClick}
-        >
-          <ChevronUp />
-        </button>
-        <span className="text-sm font-bold">{totalVotes}</span>
-        <button
-          className="text-slate-400 hover:text-red-500"
-          onClick={onDownVoteClick}
-        >
-          <ChevronDown />
-        </button>
-      </div>
+      <VoteControl
+        totalVotes={totalVotes}
+        currentVote={currentVote}
+        onUpvote={() => dispatch(asyncUpVoteThread(id))}
+        onDownvote={() => dispatch(asyncDownVoteThread(id))}
+        onNeutral={() => dispatch(asyncNeutralVoteThread(id))}
+        variant='vertical'
+      />
       <div className="flex-1 p-5 flex gap-5">
         <div className="flex-1 flex flex-col gap-2">
           <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium">

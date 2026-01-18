@@ -9,11 +9,14 @@ function postedAt(date) {
 
   if (diffDays > 0) {
     return `${diffDays} days ago`;
-  } if (diffHours > 0) {
+  }
+  if (diffHours > 0) {
     return `${diffHours} hours ago`;
-  } if (diffMinutes > 0) {
+  }
+  if (diffMinutes > 0) {
     return `${diffMinutes} minutes ago`;
-  } if (diffSeconds > 0) {
+  }
+  if (diffSeconds > 0) {
     return `${diffSeconds} seconds ago`;
   }
   return 'just now';
@@ -23,4 +26,18 @@ const stripHtmlTags = (htmlString) => {
   return htmlString.replace(/<[^>]*>/g, '');
 };
 
-export { postedAt, stripHtmlTags };
+const getCurrentVote = (upVotesBy = [], downVotesBy = [], userId) => {
+  if (!userId) return null;
+
+  if (upVotesBy.includes(userId)) {
+    return 'up';
+  }
+
+  if (downVotesBy.includes(userId)) {
+    return 'down';
+  }
+
+  return null; // neutral
+};
+
+export { postedAt, stripHtmlTags, getCurrentVote };
