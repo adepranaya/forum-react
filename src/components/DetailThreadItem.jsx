@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUp, MessageCircleIcon } from 'lucide-react';
 import { postedAt } from '../utils';
 import SafeHTMLRenderer from './SafeHTMLRenderer';
+import VoteX from './VoteX';
 
 export default function DetailThreadItem({
   id,
@@ -41,21 +42,15 @@ export default function DetailThreadItem({
       <div className="prose prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 leading-relaxed text-lg space-y-4">
         <SafeHTMLRenderer htmlString={body} />
       </div>
+
+
       <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
-            <button className="p-2 hover:bg-primary/20 hover:text-primary rounded-md transition-colors">
-              <ArrowUp />
-            </button>
-            <span className="px-2 font-bold text-sm">{totalVotes}</span>
-            <button className="p-2 hover:bg-red-500/20 hover:text-red-500 rounded-md transition-colors">
-              <ArrowDown />
-            </button>
-          </div>
-          <button className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-sm font-semibold">
+          <VoteX totalVotes={totalVotes} />
+          <a href='#comments' className="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-sm font-semibold">
             <MessageCircleIcon size={14} />
             <span>{comments?.length} Comments</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>
