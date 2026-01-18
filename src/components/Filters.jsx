@@ -2,11 +2,14 @@ import { LayoutGrid, Search } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategoryFilterActionCreator } from '../states/threadCategorySelected/action';
 import FilterButton from './FilterButton';
-import HeadingApp from './HeadingApp';
+import { setSearchFilterActionCreator } from '../states/threadSearch/action';
 
 export default function Filters({ categories = [] }) {
   const threadCategorySelected = useSelector(
     (states) => states.threadCategorySelected
+  );
+  const threadSearch = useSelector(
+    (states) => states.threadSearch
   );
   const dispatch = useDispatch();
 
@@ -14,11 +17,13 @@ export default function Filters({ categories = [] }) {
     dispatch(setCategoryFilterActionCreator(category));
   }
 
+  function onChangeSearch({ target }) {
+    console.log(target.value);
+    dispatch(setSearchFilterActionCreator(target.value));
+  }
+
   return (
     <div className="mb-6 flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <HeadingApp>All Threads</HeadingApp>
-      </div>
       {/* Search Bar */}
       <div className="flex-1 max-w-2xl">
         <div className="relative group">
@@ -27,8 +32,10 @@ export default function Filters({ categories = [] }) {
           </div>
           <input
             className="block w-full pl-10 pr-3 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg focus:ring-2 focus:ring-primary text-sm placeholder-slate-500"
-            placeholder="Search for threads, users, or tags..."
+            placeholder="Search threads..."
             type="text"
+            value={threadSearch}
+            onChange={onChangeSearch}
           />
         </div>
       </div>

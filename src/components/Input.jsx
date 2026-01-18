@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function Input({
+  as = 'input',
   label,
   id,
   preIcon,
@@ -10,6 +11,12 @@ export default function Input({
   value,
   onChange,
 }) {
+  const baseClassName = `w-full ${
+    preIcon ? 'pl-12' : 'pl-4'
+  } pr-4 ${as === 'textarea' ? 'py-3 min-h-25' : 'h-12'} rounded-lg border border-slate-200 dark:border-[#3b4754] bg-white dark:bg-[#1b2127] text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-[#9cabba]`;
+
+  const Component = as;
+
   return (
     <div className="flex flex-col gap-1">
       {label && (
@@ -22,22 +29,18 @@ export default function Input({
       )}
       <div className="relative">
         {preIcon && (
-          <div className=" absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
             {preIcon}
           </div>
         )}
-
-        <input
+        <Component
           id={id}
-          className={`w-full ${
-            preIcon ? 'pl-12' : 'pl-4'
-          } pr-4 h-12 rounded-lg border border-slate-200 dark:border-[#3b4754] bg-white dark:bg-[#1b2127] text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-[#9cabba]`}
+          className={baseClassName}
           placeholder={placeholder}
-          type={type || 'text'}
+          type={as === 'input' ? type || 'text' : undefined}
           value={value}
           onChange={onChange}
         />
-
         {postIcon}
       </div>
     </div>

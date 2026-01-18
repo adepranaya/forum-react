@@ -55,12 +55,12 @@ function downThreadActionCreator({ threadId, userId }) {
   };
 }
 
-function asyncAddThread({ text, replyTo = '' }) {
+function asyncAddThread({ title, body, category = '' }) {
   return async (dispatch) => {
     dispatch(showLoading());
 
     try {
-      const thread = await api.createThread({ text, replyTo });
+      const thread = await api.createThread({ title, body, category });
       dispatch(addThreadActionCreator(thread));
     } catch (error) {
       alert(error.message);
@@ -70,7 +70,6 @@ function asyncAddThread({ text, replyTo = '' }) {
     }
   };
 }
-
 
 function asyncUpVoteThread(threadId) {
   return async (dispatch, getState) => {
