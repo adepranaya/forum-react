@@ -1,4 +1,5 @@
 import { Eye, EyeOff } from 'lucide-react';
+import PropTypes from 'prop-types';
 
 function TogglePwIcon({ onClick, showPw }) {
   return (
@@ -11,5 +12,10 @@ function TogglePwIcon({ onClick, showPw }) {
     </button>
   );
 }
+
+TogglePwIcon.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  showPw: PropTypes.bool.isRequired,
+};
 
 export default TogglePwIcon;

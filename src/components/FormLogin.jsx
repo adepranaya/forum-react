@@ -54,6 +54,6 @@ function FormLogin({ submit }) {
 }
 
 FormLogin.propTypes = {
-  login: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
 };
 export default FormLogin;

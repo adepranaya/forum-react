@@ -5,6 +5,7 @@ import useInput from '../hooks/useInput';
 
 function CommentInput({ authUser, submit }) {
   const [content, onContentChange] = useInput('');
+  const { avatar } = authUser || {};
   if (authUser === null) {
     return (
       <p className="ms-2">
@@ -30,7 +31,7 @@ function CommentInput({ authUser, submit }) {
               alt="Logged in user avatar"
               className="w-full h-full object-cover"
               data-alt="User profile avatar small"
-              src={authUser?.avatar}
+              src={avatar}
             />
           </div>
           <div className="flex-1">
@@ -49,8 +50,12 @@ function CommentInput({ authUser, submit }) {
     </div>
   );
 }
+const authUserShape = {
+  avatar: PropTypes.string.isRequired,
+};
 
 CommentInput.propTypes = {
+  authUser: PropTypes.shape(authUserShape).isRequired,
   submit: PropTypes.func.isRequired,
 };
 export default CommentInput;

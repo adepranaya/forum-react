@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { NavLink, useLocation } from 'react-router';
 
 function SideNavItem({ to = '', children }) {
@@ -28,5 +29,10 @@ function SideNavItem({ to = '', children }) {
     </NavLink>
   );
 }
+
+SideNavItem.propTypes = {
+  to: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
 
 export default SideNavItem;

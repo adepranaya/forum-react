@@ -1,6 +1,5 @@
-import React from 'react';
-
-export default function FilterButton({ active, onClick, children }) {
+import PropTypes from 'prop-types';
+function FilterButton({ active = false, onClick, children }) {
   return (
     <button
       className={`flex items-center gap-1.5 px-4 py-2 rounded-full transition-colors whitespace-nowrap  text-sm font-medium ${
@@ -14,3 +13,10 @@ export default function FilterButton({ active, onClick, children }) {
     </button>
   );
 }
+FilterButton.propTypes = {
+  active: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
+export default FilterButton;

@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router';
 import Button from './Button';
 import { LogIn, LogOut } from 'lucide-react';
+import PropTypes from 'prop-types';
 
 function UserActions({ onSignOut }) {
   const { authUser = null } = useSelector((states) => states);
@@ -42,5 +43,9 @@ function UserActions({ onSignOut }) {
     </div>
   );
 }
+
+UserActions.propTypes = {
+  onSignOut: PropTypes.func.isRequired,
+};
 
 export default UserActions;

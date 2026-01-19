@@ -4,19 +4,21 @@ import { postedAt } from '../utils';
 import SafeHTMLRenderer from './SafeHTMLRenderer';
 import { asyncDownVoteThreadComment, asyncNeutralVoteThreadComment, asyncUpVoteThreadComment } from '../states/threadDetail/action';
 import VoteControl from './VoteControl';
+import PropTypes from 'prop-types';
 
-export default function CommentItem({
+function CommentItem({
   id: commentId,
-  content,
-  createdAt,
+  content = '',
+  createdAt = '',
   owner,
-  totalVotes,
-  upVotesBy,
-  downVotesBy,
+  totalVotes = 0,
+  upVotesBy = [],
+  downVotesBy = [],
 }) {
   const dispatch = useDispatch();
   const threadId = useSelector((state) => state.threadDetail?.id);
   const currentVote = useCurrentVote(upVotesBy, downVotesBy);
+  const { avatar, name } = owner || {};
 
   return (
     <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -26,12 +28,12 @@ export default function CommentItem({
             alt="Commenter Avatar"
             className="w-full h-full object-cover"
             data-alt="Commenter profile picture"
-            src={owner?.avatar}
+            src={avatar}
           />
         </div>
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <span className="font-bold text-sm">{owner?.name}</span>
+            <span className="font-bold text-sm">{name}</span>
             <span className="text-xs text-slate-500">
               • {postedAt(createdAt)}
             </span>
@@ -53,3 +55,19 @@ export default function CommentItem({
     </div>
   );
 }
+
+const ownerShape = {
+  avatar: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+CommentItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  totalVotes: PropTypes.number.isRequired,
+  upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+  downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+  owner: PropTypes.shape(ownerShape).isRequired,
+};
+export default CommentItem;

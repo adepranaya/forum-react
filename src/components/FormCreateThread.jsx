@@ -53,6 +53,6 @@ function FormCreateThread({ submit }) {
 }
 
 FormCreateThread.propTypes = {
-  login: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
 };
 export default FormCreateThread;

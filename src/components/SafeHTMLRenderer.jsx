@@ -1,5 +1,5 @@
-import React from 'react';
 import DOMPurify from 'dompurify';
+import PropTypes from 'prop-types';
 
 function SafeHTMLRenderer({ htmlString }) {
   // Sanitize the HTML string
@@ -9,5 +9,9 @@ function SafeHTMLRenderer({ htmlString }) {
     <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
   );
 }
+
+SafeHTMLRenderer.propTypes = {
+  htmlString: PropTypes.string.isRequired,
+};
 
 export default SafeHTMLRenderer;

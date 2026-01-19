@@ -1,6 +1,5 @@
-import React from 'react';
-
-export default function Input({
+import PropTypes from 'prop-types';
+function Input({
   as = 'input',
   label,
   id,
@@ -46,3 +45,17 @@ export default function Input({
     </div>
   );
 }
+
+Input.propTypes = {
+  as: PropTypes.oneOf(['input', 'textarea']),
+  label: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  preIcon: PropTypes.node,
+  postIcon: PropTypes.node,
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+export default Input;

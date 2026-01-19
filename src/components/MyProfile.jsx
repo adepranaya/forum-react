@@ -31,9 +31,9 @@ function MyProfile({ name, email, avatar }) {
 }
 
 MyProfile.propTypes = {
-  name: PropTypes.func.isRequired,
-  email: PropTypes.func.isRequired,
-  avatar: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
 };
 
 export default MyProfile;

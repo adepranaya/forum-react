@@ -5,23 +5,28 @@ import { NavLink } from 'react-router';
 import VoteControl from './VoteControl';
 import { useCurrentVote } from '../hooks/useCurrentVote';
 import { useDispatch } from 'react-redux';
-import { asyncDownVoteThread, asyncNeutralVoteThread, asyncUpVoteThread } from '../states/threads/action';
+import {
+  asyncDownVoteThread,
+  asyncNeutralVoteThread,
+  asyncUpVoteThread,
+} from '../states/threads/action';
+import PropTypes from 'prop-types';
 
-export default function ThreadItem({
+function ThreadItem({
   id,
   title,
   body,
   category,
   createdAt,
   user,
-  totalVotes,
+  totalVotes = 0,
   totalComments = 0,
   upVotesBy,
   downVotesBy,
 }) {
   const dispatch = useDispatch();
   const currentVote = useCurrentVote(upVotesBy, downVotesBy);
-
+  const { avatar = '', name = '' } = user || {};
   const onThreadClick = () => {
     return `/threads/${id}`;
   };
@@ -33,19 +38,17 @@ export default function ThreadItem({
         onUpvote={() => dispatch(asyncUpVoteThread(id))}
         onDownvote={() => dispatch(asyncDownVoteThread(id))}
         onNeutral={() => dispatch(asyncNeutralVoteThread(id))}
-        variant='vertical'
+        variant="vertical"
       />
       <div className="flex-1 p-5 flex gap-5">
         <div className="flex-1 flex flex-col gap-2">
           <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium flex-wrap">
             <img
-              src={user?.avatar}
+              src={avatar}
               className="size-5 rounded-full"
-              alt={`Mini avatar of ${user?.name}`}
+              alt={`Mini avatar of ${name}`}
             />
-            <span className="text-slate-900 dark:text-slate-200">
-              {user?.name}
-            </span>
+            <span className="text-slate-900 dark:text-slate-200">{name}</span>
             <span>•</span>
             <span>{postedAt(createdAt)}</span>
             <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full">
@@ -72,3 +75,21 @@ export default function ThreadItem({
     </div>
   );
 }
+
+const userShape = {
+  avatar: PropTypes.string,
+  name: PropTypes.string,
+};
+ThreadItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  user: PropTypes.shape(userShape).isRequired,
+  totalVotes: PropTypes.number,
+  totalComments: PropTypes.number,
+  upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+  downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+export default ThreadItem;

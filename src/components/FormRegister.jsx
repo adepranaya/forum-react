@@ -63,6 +63,6 @@ function FormRegister({ submit }) {
 }
 
 FormRegister.propTypes = {
-  login: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
 };
 export default FormRegister;

@@ -1,4 +1,5 @@
 import { Trophy } from 'lucide-react';
+import PropTypes from 'prop-types';
 
 const PodiumItem = ({ leader }) => {
   const isRank1 = leader?.rank === 1;
@@ -53,10 +54,7 @@ const PodiumItem = ({ leader }) => {
         <div
           className={`absolute -bottom-2 left-1/2 -translate-x-1/2 ${s.bgBadge} text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1`}
         >
-          {isRank1 && (
-            <Trophy />
-          )}
-          #{leader?.rank}
+          {isRank1 && <Trophy />}#{leader?.rank}
         </div>
       </div>
       <h3
@@ -76,6 +74,18 @@ const PodiumItem = ({ leader }) => {
       </p>
     </div>
   );
+};
+
+PodiumItem.propTypes = {
+  leader: PropTypes.shape({
+    rank: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+    }).isRequired,
+    score: PropTypes.number.isRequired,
+    tier: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default PodiumItem;

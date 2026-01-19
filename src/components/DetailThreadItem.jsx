@@ -9,8 +9,9 @@ import {
 import { useDispatch } from 'react-redux';
 import { useCurrentVote } from '../hooks/useCurrentVote';
 import VoteControl from './VoteControl';
+import PropTypes from 'prop-types';
 
-export default function DetailThreadItem({
+function DetailThreadItem({
   id,
   title,
   body,
@@ -77,3 +78,22 @@ export default function DetailThreadItem({
     </div>
   );
 }
+
+
+const ownerShape = {
+  avatar: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+DetailThreadItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  totalVotes: PropTypes.number.isRequired,
+  upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+  downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+  owner: PropTypes.shape(ownerShape).isRequired,
+};
+export default DetailThreadItem;
