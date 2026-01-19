@@ -1,5 +1,6 @@
 import { hideLoading, showLoading } from '@dimasmds/react-redux-loading-bar';
 import api from '../../utils/api';
+import { withAuth } from '../../utils';
 
 const ActionType = {
   RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
@@ -109,7 +110,7 @@ function asyncReceiveThreadDetail(threadId) {
   };
 }
 
-function asyncCreateThreadComment({ id, content }) {
+function _asyncCreateThreadComment({ id, content }) {
   return async (dispatch) => {
     dispatch(showLoading());
 
@@ -125,7 +126,7 @@ function asyncCreateThreadComment({ id, content }) {
   };
 }
 
-function asyncUpVoteThreadDetail() {
+function _asyncUpVoteThreadDetail() {
   return async (dispatch, getState) => {
     dispatch(showLoading());
     const { authUser, threadDetail } = getState();
@@ -141,7 +142,7 @@ function asyncUpVoteThreadDetail() {
   };
 }
 
-function asyncDownVoteThreadDetail() {
+function _asyncDownVoteThreadDetail() {
   return async (dispatch, getState) => {
     dispatch(showLoading());
     const { authUser, threadDetail } = getState();
@@ -157,7 +158,7 @@ function asyncDownVoteThreadDetail() {
   };
 }
 
-function asyncNeutralVoteThreadDetail() {
+function _asyncNeutralVoteThreadDetail() {
   return async (dispatch, getState) => {
     dispatch(showLoading());
     const { authUser, threadDetail } = getState();
@@ -172,7 +173,8 @@ function asyncNeutralVoteThreadDetail() {
     }
   };
 }
-function asyncUpVoteThreadComment({ id, commentId }) {
+
+function _asyncUpVoteThreadComment({ id, commentId }) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
     const { authUser } = getState();
@@ -190,7 +192,7 @@ function asyncUpVoteThreadComment({ id, commentId }) {
   };
 }
 
-function asyncDownVoteThreadComment({ id, commentId }) {
+function _asyncDownVoteThreadComment({ id, commentId }) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
     const { authUser } = getState();
@@ -208,7 +210,7 @@ function asyncDownVoteThreadComment({ id, commentId }) {
   };
 }
 
-function asyncNeutralVoteThreadComment({ id, commentId }) {
+function _asyncNeutralVoteThreadComment({ id, commentId }) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
     const { authUser } = getState();
@@ -225,6 +227,14 @@ function asyncNeutralVoteThreadComment({ id, commentId }) {
     }
   };
 }
+
+const asyncCreateThreadComment = withAuth(_asyncCreateThreadComment);
+const asyncUpVoteThreadDetail = withAuth(_asyncUpVoteThreadDetail);
+const asyncDownVoteThreadDetail = withAuth(_asyncDownVoteThreadDetail);
+const asyncNeutralVoteThreadDetail = withAuth(_asyncNeutralVoteThreadDetail);
+const asyncUpVoteThreadComment = withAuth(_asyncUpVoteThreadComment);
+const asyncDownVoteThreadComment = withAuth(_asyncDownVoteThreadComment);
+const asyncNeutralVoteThreadComment = withAuth(_asyncNeutralVoteThreadComment);
 
 export {
   ActionType,

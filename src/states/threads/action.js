@@ -1,5 +1,6 @@
 import { hideLoading, showLoading } from '@dimasmds/react-redux-loading-bar';
 import api from '../../utils/api';
+import { withAuth } from '../../utils';
 
 const ActionType = {
   RECEIVE_THREADS: 'RECEIVE_THREADS',
@@ -55,7 +56,7 @@ function downThreadActionCreator({ threadId, userId }) {
   };
 }
 
-function asyncAddThread({ title, body, category = '' }) {
+const asyncAddThread = withAuth(({ title, body, category = '' }) => {
   return async (dispatch) => {
     dispatch(showLoading());
 
@@ -69,13 +70,13 @@ function asyncAddThread({ title, body, category = '' }) {
       dispatch(hideLoading());
     }
   };
-}
+});
 
-function asyncUpVoteThread(threadId) {
+const asyncUpVoteThread = withAuth((threadId) => {
   return async (dispatch, getState) => {
     dispatch(showLoading());
     const { authUser } = getState();
-    dispatch(upThreadActionCreator({ threadId, userId: authUser.id }));
+    dispatch(upThreadActionCreator({ threadId, userId: authUser?.id }));
     try {
       await api.upVoteThread(threadId);
     } catch (error) {
@@ -85,9 +86,9 @@ function asyncUpVoteThread(threadId) {
       dispatch(hideLoading());
     }
   };
-}
+});
 
-function asyncDownVoteThread(threadId) {
+const asyncDownVoteThread = withAuth((threadId) => {
   return async (dispatch, getState) => {
     dispatch(showLoading());
     const { authUser } = getState();
@@ -101,8 +102,9 @@ function asyncDownVoteThread(threadId) {
       dispatch(hideLoading());
     }
   };
-}
-function asyncNeutralVoteThread(threadId) {
+});
+
+const asyncNeutralVoteThread = withAuth((threadId) => {
   return async (dispatch, getState) => {
     dispatch(showLoading());
     const { authUser } = getState();
@@ -116,7 +118,7 @@ function asyncNeutralVoteThread(threadId) {
       dispatch(hideLoading());
     }
   };
-}
+});
 
 export {
   ActionType,

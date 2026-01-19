@@ -8,7 +8,7 @@ import threadCategorySelectedReducer from './threadCategorySelected/reducer';
 import isPreloadReducer from './isPreload/reducer';
 import authUserReducer from './authUser/reducer';
 import threadSearchReducer from './threadSearch/reducer';
-
+import { authMiddleware } from './middlewares.js';
 const store = configureStore({
   reducer: {
     threads: threadsReducer,
@@ -21,6 +21,8 @@ const store = configureStore({
     isPreload: isPreloadReducer,
     authUser: authUserReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authMiddleware),
 });
 
 export default store;
