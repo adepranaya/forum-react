@@ -1,10 +1,4 @@
-export function useVoteLogic({
-  totalVotes,
-  currentVote,
-  onUpvote,
-  onDownvote,
-  onNeutral,
-}) {
+export function useVoteLogic({ currentVote, onUpvote, onDownvote, onNeutral }) {
   const handleVote = (voteType) => {
     if (currentVote === voteType) {
       onNeutral();
@@ -15,5 +9,5 @@ export function useVoteLogic({
     }
   };
 
-  return { handleVote, totalVotes, currentVote };
+  return { handleVote };
 }

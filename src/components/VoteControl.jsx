@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUp, ChevronDown, ChevronUp } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { cn } from '../utils/cn';
+import { useVoteLogic } from '../hooks/useVoteLogic';
 
 const VARIANTS = {
   horizontal: {
@@ -25,26 +26,11 @@ const VARIANTS = {
   },
 };
 
-function VoteControl({
-  totalVotes = 0,
-  currentVote,
-  onUpvote,
-  onDownvote,
-  onNeutral,
-  variant = 'horizontal',
-}) {
+function VoteControl(props) {
+  const { totalVotes = 0, currentVote, variant = 'horizontal' } = props;
   const styles = VARIANTS[variant] || VARIANTS.horizontal;
   const { IconUp, IconDown } = styles;
-
-  const handleVote = (voteType) => {
-    if (currentVote === voteType) {
-      onNeutral();
-    } else if (voteType === 'up') {
-      onUpvote();
-    } else {
-      onDownvote();
-    }
-  };
+  const { handleVote } = useVoteLogic(props);
 
   return (
     <div className={styles.container}>
@@ -79,10 +65,10 @@ function VoteControl({
 
 VoteControl.propTypes = {
   totalVotes: PropTypes.number,
-  currentVote: PropTypes.oneOf(['up', 'down', 'neutral']),
-  onUpvote: PropTypes.func,
-  onDownvote: PropTypes.func,
-  onNeutral: PropTypes.func,
+  currentVote: PropTypes.oneOf(['up', 'down', 'neutral']).isRequired,
+  onUpvote: PropTypes.func.isRequired,
+  onDownvote: PropTypes.func.isRequired,
+  onNeutral: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(['horizontal', 'vertical']),
 };
 
