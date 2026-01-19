@@ -1,6 +1,7 @@
 import { hideLoading, showLoading } from '@dimasmds/react-redux-loading-bar';
 import api from '../../utils/api';
 import { withAuth } from '../../utils';
+import { createVoteThunk } from '../../utils/createVoteThunk';
 
 const ActionType = {
   RECEIVE_THREADS: 'RECEIVE_THREADS',
@@ -72,52 +73,41 @@ const asyncAddThread = withAuth(({ title, body, category = '' }) => {
   };
 });
 
-const asyncUpVoteThread = withAuth((threadId) => {
-  return async (dispatch, getState) => {
-    dispatch(showLoading());
-    const { authUser } = getState();
-    dispatch(upThreadActionCreator({ threadId, userId: authUser?.id }));
-    try {
-      await api.upVoteThread(threadId);
-    } catch (error) {
-      alert(error.message);
-      throw new Error(error.message);
-    } finally {
-      dispatch(hideLoading());
-    }
-  };
+// Config untuk thread votes
+const threadVoteConfig = {
+  actionCreators: {
+    up: upThreadActionCreator,
+    down: downThreadActionCreator,
+    neutral: neutralThreadActionCreator
+  },
+  getVoteState: (state, threadId) => {
+    const thread = state.threads.find((t) => t.id === threadId);
+    return {
+      upVotesBy: thread.upVotesBy,
+      downVotesBy: thread.downVotesBy
+    };
+  },
+  getParams: (state, threadId, authUser) => ({
+    threadId,
+    userId: authUser.id
+  })
+};
+const asyncUpVoteThread = createVoteThunk({
+  voteType: 'up',
+  ...threadVoteConfig,
+  apiCall: api.upVoteThread
 });
 
-const asyncDownVoteThread = withAuth((threadId) => {
-  return async (dispatch, getState) => {
-    dispatch(showLoading());
-    const { authUser } = getState();
-    dispatch(downThreadActionCreator({ threadId, userId: authUser.id }));
-    try {
-      await api.downVoteThread(threadId);
-    } catch (error) {
-      alert(error.message);
-      throw new Error(error.message);
-    } finally {
-      dispatch(hideLoading());
-    }
-  };
+const asyncDownVoteThread = createVoteThunk({
+  voteType: 'down',
+  ...threadVoteConfig,
+  apiCall: api.downVoteThread
 });
 
-const asyncNeutralVoteThread = withAuth((threadId) => {
-  return async (dispatch, getState) => {
-    dispatch(showLoading());
-    const { authUser } = getState();
-    dispatch(neutralThreadActionCreator({ threadId, userId: authUser.id }));
-    try {
-      await api.neutralVoteThread(threadId);
-    } catch (error) {
-      alert(error.message);
-      throw new Error(error.message);
-    } finally {
-      dispatch(hideLoading());
-    }
-  };
+const asyncNeutralVoteThread = createVoteThunk({
+  voteType: 'neutral',
+  ...threadVoteConfig,
+  apiCall: api.neutralVoteThread
 });
 
 export {
