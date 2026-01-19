@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import HeadingApp from './HeadingApp';
 
-export default function NotFound({title = 'Page Not Found'}) {
+export default function NotFound({ title = 'Page Not Found' }) {
   return (
     <div>
       <HeadingApp className="mb-4">{title}</HeadingApp>

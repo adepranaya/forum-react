@@ -180,7 +180,7 @@ function asyncUpVoteThreadComment({ id, commentId }) {
       upVoteThreadCommentActionCreator({ commentId, userId: authUser.id })
     );
     try {
-      await api.upVoteThreadComment({id, commentId});
+      await api.upVoteThreadComment({ id, commentId });
     } catch (error) {
       alert(error.message);
       throw new Error(error.message);

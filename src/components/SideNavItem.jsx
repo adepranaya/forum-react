@@ -2,7 +2,7 @@ import { NavLink, useLocation } from 'react-router';
 
 function SideNavItem({ to = '', children }) {
   const location = useLocation();
-  
+
   // Custom logic to determine if this link should be active
   const isActive = () => {
     // For home link (/), it should be active only on / or when on nested threads routes
@@ -10,7 +10,7 @@ function SideNavItem({ to = '', children }) {
       return location.pathname === '/' || location.pathname.startsWith('/threads');
     }
     // For other links, use standard comparison
-    return location.pathname === to || location.pathname.startsWith(to + '/');
+    return location.pathname === to || location.pathname.startsWith(`${to  }/`);
   };
 
   return (

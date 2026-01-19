@@ -43,9 +43,9 @@ export default function CommentItem({
             <VoteControl
               totalVotes={totalVotes}
               currentVote={currentVote}
-              onUpvote={() => dispatch(asyncUpVoteThreadComment({id: threadId, commentId}))}
-              onDownvote={() => dispatch(asyncDownVoteThreadComment({id: threadId, commentId}))}
-              onNeutral={() => dispatch(asyncNeutralVoteThreadComment({id: threadId, commentId}))}
+              onUpvote={() => dispatch(asyncUpVoteThreadComment({ id: threadId, commentId }))}
+              onDownvote={() => dispatch(asyncDownVoteThreadComment({ id: threadId, commentId }))}
+              onNeutral={() => dispatch(asyncNeutralVoteThreadComment({ id: threadId, commentId }))}
             />
           </div>
         </div>

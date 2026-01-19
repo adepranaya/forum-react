@@ -11,7 +11,7 @@ import NotFound from '../components/NotFound';
 export default function DetailThreadPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { threadDetail = null, authUser = null, loadingBar = {default: 0} } = useSelector(
+  const { threadDetail = null, authUser = null, loadingBar = { default: 0 } } = useSelector(
     (states) => states
   );
 
@@ -37,8 +37,8 @@ export default function DetailThreadPage() {
     dispatch(asyncCreateThreadComment({ id, content }));
   };
 
-  if(threadDetail === null && [1,2].includes(loadingBar.default)) {
-    return 'loading...'
+  if (threadDetail === null && [1, 2].includes(loadingBar.default)) {
+    return 'loading...';
   }
   if (threadDetail === null) {
     return <NotFound title="Thread Not Found" />;

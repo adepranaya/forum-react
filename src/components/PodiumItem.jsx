@@ -1,4 +1,4 @@
-import { Trophy } from "lucide-react";
+import { Trophy } from 'lucide-react';
 
 const PodiumItem = ({ leader }) => {
   const isRank1 = leader?.rank === 1;
