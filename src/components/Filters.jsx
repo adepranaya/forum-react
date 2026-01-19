@@ -8,12 +8,13 @@ export default function Filters({ categories = [] }) {
   const threadCategorySelected = useSelector(
     (states) => states.threadCategorySelected
   );
-  const threadSearch = useSelector(
-    (states) => states.threadSearch
-  );
+  const threadSearch = useSelector((states) => states.threadSearch);
   const dispatch = useDispatch();
 
   function onClickCategory(category = null) {
+    if (threadCategorySelected === category) {
+      category = null;
+    }
     dispatch(setCategoryFilterActionCreator(category));
   }
 

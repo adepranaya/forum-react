@@ -43,7 +43,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-4">
         <HeadingApp>All Threads</HeadingApp>
       </div>
       <Filters categories={categoryList} />
