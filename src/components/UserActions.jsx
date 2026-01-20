@@ -20,24 +20,34 @@ function UserActions({ onSignOut }) {
         </Button>
       ) : (
         <>
-          <NavLink
-            to="/profile"
-            className="hidden sm:flex items-center gap-3 pl-2"
-          >
-            <div className="text-right ">
-              <p className="text-xs font-semibold">{authUser.name}</p>
-              <p className="text-[10px] text-slate-500">{authUser.email}</p>
+          <div className="dropdown dropdown-end">
+            <div
+              tabindex="0"
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <img
+                src={authUser.avatar}
+                className="size-10 rounded-full border-2 border-primary/20"
+                alt="User profile avatar portrait"
+              ></img>
             </div>
-            <img
-              src={authUser.avatar}
-              className="size-10 rounded-full border-2 border-primary/20"
-              alt="User profile avatar portrait"
-            ></img>
-          </NavLink>
-          <Button onClick={onSignOut}>
-            <span className="hidden sm:block">Sign Out </span>
-            <LogOut className="sm:ms-2" />
-          </Button>
+            <ul
+              tabindex="-1"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <NavLink
+                  to="/profile"
+                >
+                  Profile
+                </NavLink>
+              </li>
+              <li>
+                <button onClick={onSignOut}>Sign Out</button>
+              </li>
+            </ul>
+          </div>
         </>
       )}
     </div>

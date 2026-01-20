@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useCurrentVote } from '../hooks/useCurrentVote';
 import VoteControl from './VoteControl';
 import PropTypes from 'prop-types';
+import CurrentVote from './CurrentVote';
 
 function DetailThreadItem({
   id,
@@ -75,10 +76,11 @@ function DetailThreadItem({
           </a>
         </div>
       </div>
+
+      <CurrentVote currentVote={currentVote} />
     </div>
   );
 }
-
 
 const ownerShape = {
   avatar: PropTypes.string.isRequired,
