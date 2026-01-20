@@ -35,7 +35,7 @@ function FormLogin({ submit }) {
         placeholder="••••••••"
         type={showPw ? 'text' : 'password'}
         value={password}
-        onChange={onPasswordChange}
+        onChange={onPasswordChane}
       />
 
       <Button
