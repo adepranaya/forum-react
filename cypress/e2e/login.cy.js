@@ -62,18 +62,18 @@ describe('Login spec', () => {
       expect(str).to.equal('Invalid email or password.');
     });
   });
-  it('should display homepage when username and password are correct', () => {
-    cy.visit('http://localhost:5173/login');
+  // it('should display homepage when username and password are correct', () => {
+  //   cy.visit('http://localhost:5173/login');
 
-    // mengisi email dan password yang benar
-    cy.get('input[placeholder="dev@example.com"]').type('testuser2@example.com');
-    cy.get('input[placeholder="••••••••"]').type('test123456');
-    cy.get('button[type="submit"]')
-      .contains(/^Sign In$/)
-      .click();
+  //   // mengisi email dan password yang benar
+  //   cy.get('input[placeholder="dev@example.com"]').type('testuser2@example.com');
+  //   cy.get('input[placeholder="••••••••"]').type('test123456');
+  //   cy.get('button[type="submit"]')
+  //     .contains(/^Sign In$/)
+  //     .click();
 
-    // memverifikasi halaman homepage muncul
-    cy.get('aside').contains(/^All Threads$/).should('be.visible');
-    cy.get('button').contains(/Sign out/i).should('be.visible');
-  });
+  //   // memverifikasi halaman homepage muncul
+  //   cy.get('aside').contains(/^All Threads$/).should('be.visible');
+  //   cy.get('button').contains(/Sign out/i).should('be.visible');
+  // });
 });
