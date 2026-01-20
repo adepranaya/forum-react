@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "e2e": "cypress run",
+    "e2e": "start-server-and-test dev http-get://localhost:5173 cypress:run",
+    "cypress:run": "cypress run",
     "e2e:open": "cypress open",
     "ci:test": "vitest --no-watch && start-server-and-test dev http-get://localhost:5173 e2e"
   },
