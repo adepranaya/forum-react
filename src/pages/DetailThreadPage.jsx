@@ -11,10 +11,12 @@ import CommentsList from '../components/CommentsList';
 import CommentInput from '../components/CommentInput';
 import NotFound from '../components/NotFound';
 import Breadcrumbs from '../components/Breadcrumbs';
+import { getThreadDetailWithVotes } from '../states/threadDetail/selector';
 
 export default function DetailThreadPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const thread = useSelector(getThreadDetailWithVotes);
   const {
     threadDetail = null,
     authUser = null,
@@ -27,19 +29,6 @@ export default function DetailThreadPage() {
       dispatch(asyncReceiveThreadDetail(id));
     }
   }, [id, dispatch]);
-
-  const thread = {
-    ...threadDetail,
-    totalVotes: threadDetail
-      ? threadDetail?.upVotesBy?.length - threadDetail?.downVotesBy?.length
-      : 0,
-    comments: threadDetail?.comments
-      ? threadDetail.comments.map((comment) => ({
-        ...comment,
-        totalVotes: comment?.upVotesBy?.length - comment?.downVotesBy?.length,
-      }))
-      : [],
-  };
 
   const onCreateComment = ({ content }) => {
     dispatch(asyncCreateThreadComment({ id, content }));

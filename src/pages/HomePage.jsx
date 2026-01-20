@@ -4,40 +4,17 @@ import ThreadsList from '../components/ThreadsList';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncPopulateUsersAndThreads } from '../states/shared/action';
 import HeadingApp from '../components/HeadingApp';
+import { getThreadList } from '../states/threads/selector';
 
 const HomePage = () => {
-  const {
-    threads = [],
-    users = [],
-    threadCategorySelected = null,
-    threadSearch = '',
-  } = useSelector((states) => states);
+  const threadList = useSelector(getThreadList);
+  const { threads = [] } = useSelector((states) => states);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());
   }, [dispatch]);
-
-  const filteredThreads =
-    threadCategorySelected === null
-      ? threads
-      : threads.filter((thread) => thread.category === threadCategorySelected);
-
-  const searchLower = threadSearch.toLowerCase();
-
-  const searchedThreads = filteredThreads.filter((thread) => {
-    const titleMatch = thread.title.toLowerCase().includes(searchLower);
-    const bodyMatch = thread.body.toLowerCase().includes(searchLower);
-
-    return titleMatch || bodyMatch;
-  });
-
-  const threadList = searchedThreads.map((thread) => ({
-    ...thread,
-    user: users.find((user) => user.id === thread.ownerId),
-    totalVotes: thread.upVotesBy.length - thread.downVotesBy.length,
-  }));
 
   const categoryList = threads.map((thread) => thread.category);
 

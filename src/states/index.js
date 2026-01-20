@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { loadingBarReducer } from '@dimasmds/react-redux-loading-bar';
-import persistStore, {
+import {
   persistReducer,
   FLUSH,
   REHYDRATE,
@@ -8,6 +8,7 @@ import persistStore, {
   PERSIST,
   PURGE,
   REGISTER,
+  persistStore
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import threadsReducer from './threads/reducer';
