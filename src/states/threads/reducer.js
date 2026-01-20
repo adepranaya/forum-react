@@ -11,6 +11,10 @@ function threadsReducer(threads = [], action = {}) {
       if (thread.id !== action.payload.threadId){
         return thread;
       }
+      // Prevent duplicate upvotes
+      if (thread.upVotesBy.includes(action.payload.userId)) {
+        return thread;
+      }
       return {
         ...thread,
         upVotesBy: [...thread.upVotesBy, action.payload.userId],
@@ -39,6 +43,10 @@ function threadsReducer(threads = [], action = {}) {
   case ActionType.DOWN_VOTE_THREAD: {
     return threads.map((thread) => {
       if (thread.id !== action.payload.threadId){
+        return thread;
+      }
+      // Prevent duplicate downvotes
+      if (thread.downVotesBy.includes(action.payload.userId)) {
         return thread;
       }
       return {

@@ -44,7 +44,6 @@ const withAuth = (thunkAction) => {
   return (...args) => {
     return (dispatch, getState) => {
       const { authUser } = getState();
-      console.log('withAuth - authUser:', authUser);
       if (!authUser) {
         alert('You must be logged in to perform this action.');
         return Promise.resolve(); // Return empty promise
