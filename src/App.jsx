@@ -7,7 +7,7 @@ import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DetailThreadPage from './pages/DetailThreadPage';
-import CreateThreadPage from './pages/CreateThreadPAge';
+import CreateThreadPage from './pages/CreateThreadPage';
 import AuthLayout from './layouts/AuthLayout';
 import MainLayout from './layouts/MainLayout';
 import { useEffect } from 'react';
