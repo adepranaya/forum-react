@@ -4,6 +4,7 @@
  * - asyncPopulateUsersAndThreads thunk
  *  - should dispatch action correctly when data fetching success
  *  - should dispatch action and call alert correctly when data fetching failed
+ *  - should dispatch loading bar actions
  */
 
 import { hideLoading, showLoading } from '@dimasmds/react-redux-loading-bar';
@@ -89,5 +90,28 @@ describe('asyncPopulateUsersAndThreads thunk', () => {
     expect(dispatch).toHaveBeenCalledWith(showLoading());
     expect(window.alert).toHaveBeenCalledWith(errorMessage);
     expect(dispatch).toHaveBeenCalledWith(hideLoading());
+  });
+
+  it('should dispatch loading bar actions', async () => {
+    // arrange
+    const fakeUsers = [];
+    const fakeThreads = [];
+
+    // mock implementation
+    api.getAllUsers = () => Promise.resolve(fakeUsers);
+    api.getAllThreads = () => Promise.resolve(fakeThreads);
+
+    // mock dispatch
+    const dispatch = vi.fn();
+
+    // action
+    await asyncPopulateUsersAndThreads()(dispatch);
+
+    // assert
+    const dispatchCalls = dispatch.mock.calls;
+    expect(dispatchCalls[0][0]).toEqual(showLoading());
+    expect(
+      dispatchCalls[dispatchCalls.length - 1][0]
+    ).toEqual(hideLoading());
   });
 });

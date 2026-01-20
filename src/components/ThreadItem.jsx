@@ -71,7 +71,7 @@ function ThreadItem({
               {totalComments} Comments
             </NavLink>
           </div>
-        <CurrentVote currentVote={currentVote} />
+          <CurrentVote currentVote={currentVote} />
         </div>
       </div>
     </div>
