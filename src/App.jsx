@@ -16,6 +16,7 @@ import { asyncPreloadProcess } from './states/isPreload/action';
 import { asyncUnsetAuthUser } from './states/authUser/action';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './components/NotFound';
+import { persistor } from './states';
 
 function App() {
   const { authUser = null, isPreload = false } = useSelector(
@@ -35,6 +36,7 @@ function App() {
 
   const onSignOut = () => {
     dispatch(asyncUnsetAuthUser());
+    persistor.purge();
     navigate('/');
   };
 
