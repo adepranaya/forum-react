@@ -7,7 +7,7 @@ import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DetailThreadPage from './pages/DetailThreadPage';
-import CreateThreadPage from './pages/CreateThreadPAge';
+import CreateThreadPage from './pages/CreateThreadPage';
 import AuthLayout from './layouts/AuthLayout';
 import MainLayout from './layouts/MainLayout';
 import { useEffect } from 'react';
@@ -16,6 +16,7 @@ import { asyncPreloadProcess } from './states/isPreload/action';
 import { asyncUnsetAuthUser } from './states/authUser/action';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './components/NotFound';
+import { persistor } from './states';
 
 function App() {
   const { authUser = null, isPreload = false } = useSelector(
@@ -35,6 +36,7 @@ function App() {
 
   const onSignOut = () => {
     dispatch(asyncUnsetAuthUser());
+    persistor.purge();
     navigate('/');
   };
 

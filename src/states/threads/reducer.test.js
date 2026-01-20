@@ -10,6 +10,8 @@
  *  - should return the threads with the down voted thread when given by DOWN_VOTE_THREAD action
  *  - should return the threads without duplicating the user ID when DOWN_VOTE_THREAD is dispatched twice by the same user
  *  - should return the threads with the neutral voted thread when given by NEUTRAL_VOTE_THREAD action
+ *  - should return the threads with the neutral voted thread when given by UP_VOTE_THREAD action but user have downvoted before
+ *  - should return the threads with the neutral voted thread when given by DOWN_VOTE_THREAD action but user have upvoted before
  *  - should return the threads unchanged when NEUTRAL_VOTE_THREAD is dispatched and user is already neutral
  *
  */
@@ -244,6 +246,58 @@ describe('threadsReducers function', () => {
     // assert
     expect(nextState[0].upVotesBy).not.toContain('user-1');
     expect(nextState[0].downVotesBy).toContain('user-2');
+  });
+
+  it('should return the threads with the neutral voted thread when given by UP_VOTE_THREAD action but user have downvoted before', () => {
+    // arrange
+    const initialState = [
+      {
+        id: 'thread-1',
+        upVotesBy: [],
+        downVotesBy: ['user-1'], // user-1 sudah melakukan downvote sebelumnya
+        // ... field lainnya
+      },
+    ];
+    const action = {
+      type: ActionType.UP_VOTE_THREAD,
+      payload: {
+        threadId: 'thread-1',
+        userId: 'user-1',
+      },
+    };
+
+    // action
+    const nextState = threadsReducer(initialState, action);
+
+    // assert
+    expect(nextState[0].upVotesBy).not.toContain('user-1');
+    expect(nextState[0].downVotesBy).not.toContain('user-1');
+  });
+
+  it('should return the threads with the neutral voted thread when given by DOWN_VOTE_THREAD action but user have upvoted before', () => {
+    // arrange
+    const initialState = [
+      {
+        id: 'thread-1',
+        upVotesBy: ['user-1'], // user-1 sudah melakukan upvote sebelumnya
+        downVotesBy: [],
+        // ... field lainnya
+      },
+    ];
+    const action = {
+      type: ActionType.DOWN_VOTE_THREAD,
+      payload: {
+        threadId: 'thread-1',
+        userId: 'user-1',
+      },
+    };
+
+    // action
+    const nextState = threadsReducer(initialState, action);
+
+    // assert
+    expect(nextState[0].upVotesBy).not.toContain('user-1');
+    expect(nextState[0].downVotesBy).not.toContain('user-1');
   });
 
   it('should return the threads unchanged when NEUTRAL_VOTE_THREAD is dispatched and user is already neutral', () => {
