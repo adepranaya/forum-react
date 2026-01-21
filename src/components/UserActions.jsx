@@ -21,6 +21,17 @@ function UserActions({ onSignOut }) {
 
   return (
     <div className="flex items-center gap-4">
+      <label className="swap swap-rotate">
+        <input
+          type="checkbox"
+          className="theme-controller"
+          value="synthwave"
+          checked={theme === 'dark'}
+          onChange={handleThemeToggle}
+        />
+        <Sun className="swap-on" />
+        <Moon className="swap-off" />
+      </label>
       {authUser === null ? (
         <Button onClick={navToSignin}>
           <span className="hidden sm:block">Sign In</span>
@@ -28,17 +39,6 @@ function UserActions({ onSignOut }) {
         </Button>
       ) : (
         <>
-          <label className="swap swap-rotate">
-            <input
-              type="checkbox"
-              className="theme-controller"
-              value="synthwave"
-              checked={theme === 'dark'}
-              onChange={handleThemeToggle}
-            />
-            <Sun className="swap-on" />
-            <Moon className="swap-off" />
-          </label>
           <div className="dropdown dropdown-end">
             <div
               tabindex="0"
@@ -53,7 +53,7 @@ function UserActions({ onSignOut }) {
             </div>
             <ul
               tabindex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content rounded-box z-1 mt-2 w-52 p-2 shadow bg-white dark:bg-base-100"
             >
               <li>
                 <NavLink to="/profile">Profile</NavLink>
