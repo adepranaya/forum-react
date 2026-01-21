@@ -2,9 +2,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCurrentVote } from '../hooks/useCurrentVote';
 import { postedAt } from '../utils';
 import SafeHTMLRenderer from './SafeHTMLRenderer';
-import { asyncDownVoteThreadComment, asyncNeutralVoteThreadComment, asyncUpVoteThreadComment } from '../states/threadDetail/action';
+import {
+  asyncDownVoteThreadComment,
+  asyncNeutralVoteThreadComment,
+  asyncUpVoteThreadComment,
+} from '../states/threadDetail/action';
 import VoteControl from './VoteControl';
 import PropTypes from 'prop-types';
+import CurrentVote from './CurrentVote';
 
 function CommentItem({
   id: commentId,
@@ -45,11 +50,22 @@ function CommentItem({
             <VoteControl
               totalVotes={totalVotes}
               currentVote={currentVote}
-              onUpvote={() => dispatch(asyncUpVoteThreadComment({ id: threadId, commentId }))}
-              onDownvote={() => dispatch(asyncDownVoteThreadComment({ id: threadId, commentId }))}
-              onNeutral={() => dispatch(asyncNeutralVoteThreadComment({ id: threadId, commentId }))}
+              onUpvote={() =>
+                dispatch(asyncUpVoteThreadComment({ id: threadId, commentId }))
+              }
+              onDownvote={() =>
+                dispatch(
+                  asyncDownVoteThreadComment({ id: threadId, commentId })
+                )
+              }
+              onNeutral={() =>
+                dispatch(
+                  asyncNeutralVoteThreadComment({ id: threadId, commentId })
+                )
+              }
             />
           </div>
+          <CurrentVote currentVote={currentVote} />
         </div>
       </div>
     </div>

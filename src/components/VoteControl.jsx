@@ -15,7 +15,7 @@ const VARIANTS = {
   },
   vertical: {
     container:
-      'w-12 bg-slate-50 dark:bg-slate-950/40 flex flex-col items-center py-4 gap-1',
+      'w-12 bg-slate-50 dark:bg-slate-950/40 flex flex-col items-center py-4 gap-1 rounded-s-xl',
     buttonUp:
       'p-2 hover:bg-primary/20 text-slate-400 hover:text-primary rounded-md',
     buttonDown:
@@ -34,31 +34,47 @@ function VoteControl(props) {
 
   return (
     <div className={styles.container}>
-      <button
-        className={cn(
-          `${styles.buttonUp} transition-colors ${
-            currentVote === 'up' ? 'text-primary' : ''
-          }`
-        )}
-        onClick={() => handleVote('up')}
-        aria-label="Upvote"
-      >
-        <IconUp size={14} />
-      </button>
+      <div className="tooltip">
+        <div className="tooltip-content">
+          <div className="animate-bounce text-primary -rotate-10 text-2xl font-black">
+            Up
+          </div>
+        </div>
+        <button
+          className={cn(
+            `${styles.buttonUp} transition-colors ${
+              currentVote === 'up' ? 'text-primary' : ''
+            }`
+          )}
+          onClick={() => handleVote('up')}
+          aria-label="Upvote"
+          title="Upvote"
+        >
+          <IconUp size={14} />
+        </button>
+      </div>
 
       <span className={styles.text}>{totalVotes}</span>
 
-      <button
-        className={cn(
-          `${styles.buttonDown} transition-colors ${
-            currentVote === 'down' ? 'text-red-500' : ''
-          }`
-        )}
-        onClick={() => handleVote('down')}
-        aria-label="Downvote"
-      >
-        <IconDown size={14} />
-      </button>
+      <div className="tooltip tooltip-bottom">
+        <div className="tooltip-content">
+          <div className="animate-bounce text-red-500 rotate-10 text-2xl font-black">
+            Down
+          </div>
+        </div>
+        <button
+          className={cn(
+            `${styles.buttonDown} transition-colors ${
+              currentVote === 'down' ? 'text-red-500' : ''
+            }`
+          )}
+          onClick={() => handleVote('down')}
+          aria-label="Downvote"
+          title="Downvote"
+        >
+          <IconDown size={14} />
+        </button>
+      </div>
     </div>
   );
 }

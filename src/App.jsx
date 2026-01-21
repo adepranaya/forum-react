@@ -19,7 +19,7 @@ import NotFound from './components/NotFound';
 import { persistor } from './states';
 
 function App() {
-  const { authUser = null, isPreload = false } = useSelector(
+  const { authUser = null, isPreload = false, theme = 'light' } = useSelector(
     (states) => states
   );
 
@@ -29,6 +29,15 @@ function App() {
   useEffect(() => {
     dispatch(asyncPreloadProcess());
   }, [dispatch]);
+
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    if (theme === 'dark') {
+      htmlElement.classList.add('dark');
+    } else {
+      htmlElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   if (isPreload) {
     return null;

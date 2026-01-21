@@ -1,16 +1,24 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router';
 import Button from './Button';
-import { LogIn, LogOut } from 'lucide-react';
+import { LogIn, LogOut, Moon, Sun } from 'lucide-react';
 import PropTypes from 'prop-types';
+import { setTheme } from '../states/theme/action';
 
 function UserActions({ onSignOut }) {
-  const { authUser = null } = useSelector((states) => states);
+  const { authUser = null, theme = 'light' } = useSelector((states) => states);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   function navToSignin() {
     navigate('/login');
   }
+
+  function handleThemeToggle() {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    dispatch(setTheme(newTheme));
+  }
+
   return (
     <div className="flex items-center gap-4">
       {authUser === null ? (
@@ -20,24 +28,41 @@ function UserActions({ onSignOut }) {
         </Button>
       ) : (
         <>
-          <NavLink
-            to="/profile"
-            className="hidden sm:flex items-center gap-3 pl-2"
-          >
-            <div className="text-right ">
-              <p className="text-xs font-semibold">{authUser.name}</p>
-              <p className="text-[10px] text-slate-500">{authUser.email}</p>
+          <label className="swap swap-rotate">
+            <input
+              type="checkbox"
+              className="theme-controller"
+              value="synthwave"
+              checked={theme === 'dark'}
+              onChange={handleThemeToggle}
+            />
+            <Sun className="swap-on" />
+            <Moon className="swap-off" />
+          </label>
+          <div className="dropdown dropdown-end">
+            <div
+              tabindex="0"
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <img
+                src={authUser.avatar}
+                className="size-10 rounded-full border-2 border-primary/20"
+                alt="User profile avatar portrait"
+              ></img>
             </div>
-            <img
-              src={authUser.avatar}
-              className="size-10 rounded-full border-2 border-primary/20"
-              alt="User profile avatar portrait"
-            ></img>
-          </NavLink>
-          <Button onClick={onSignOut}>
-            <span className="hidden sm:block">Sign Out </span>
-            <LogOut className="sm:ms-2" />
-          </Button>
+            <ul
+              tabindex="-1"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <NavLink to="/profile">Profile</NavLink>
+              </li>
+              <li>
+                <button onClick={onSignOut}>Sign Out</button>
+              </li>
+            </ul>
+          </div>
         </>
       )}
     </div>

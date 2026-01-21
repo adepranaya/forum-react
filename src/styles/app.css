@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+@plugin "daisyui";
 
 @theme {
   /* Colors */
@@ -29,7 +31,7 @@
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
-  .loading {
+  .loading-bar-container {
     position: sticky;
     top: 0;
     z-index: 51;

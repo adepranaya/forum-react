@@ -11,6 +11,7 @@ import {
   asyncUpVoteThread,
 } from '../states/threads/action';
 import PropTypes from 'prop-types';
+import CurrentVote from './CurrentVote';
 
 function ThreadItem({
   id,
@@ -31,7 +32,7 @@ function ThreadItem({
     return `/threads/${id}`;
   };
   return (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/40 transition-colors flex">
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-primary/40 transition-colors flex overflow-visible">
       <VoteControl
         totalVotes={totalVotes}
         currentVote={currentVote}
@@ -70,6 +71,7 @@ function ThreadItem({
               {totalComments} Comments
             </NavLink>
           </div>
+          <CurrentVote currentVote={currentVote} />
         </div>
       </div>
     </div>
