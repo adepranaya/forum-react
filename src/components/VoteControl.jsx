@@ -15,7 +15,7 @@ const VARIANTS = {
   },
   vertical: {
     container:
-      'w-12 bg-slate-50 dark:bg-slate-950/40 flex flex-col items-center py-4 gap-1',
+      'w-12 bg-slate-50 dark:bg-slate-950/40 flex flex-col items-center py-4 gap-1 rounded-s-xl',
     buttonUp:
       'p-2 hover:bg-primary/20 text-slate-400 hover:text-primary rounded-md',
     buttonDown:

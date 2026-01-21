@@ -32,7 +32,7 @@ export default function Filters({ categories = [] }) {
             <Search />
           </div>
           <input
-            className="block w-full pl-10 pr-3 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg focus:ring-2 focus:ring-primary text-sm placeholder-slate-500"
+            className="block w-full pl-10 pr-3 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg focus:ring-2 focus:ring-primary text-sm placeholder-slate-500 focus:placeholder-slate-400 transition-all"
             placeholder="Search threads..."
             type="text"
             value={threadSearch}
