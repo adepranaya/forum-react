@@ -36,4 +36,8 @@
     top: 0;
     z-index: 51;
   }
+  .menu :where(li:not(.menu-title):not(:empty)) > :where(:not(ul):hover) {
+    background-color: var(--color-background-light) !important;
+    color: black;
+  }
 }
